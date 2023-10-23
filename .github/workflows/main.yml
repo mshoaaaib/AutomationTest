@@ -1,9 +1,10 @@
 name: Cypress Tests
 
 on:
-  push:
-    branches:
-      - main # Adjustesttttttttttttttttttttt the branch name as needed
+  workflow_run:
+    workflows: ["Your Previous Workflow Name"]
+    types:
+      - completed
 
 jobs:
   cypress:
@@ -21,10 +22,13 @@ jobs:
     - name: Install dependencies
       run: npm install
 
+    - name: Start Node.js server
+      run: |
+        cd server
+        node server.js &
+
     - name: Run Cypress tests
       run: npm run cypress:run # Adjust this script to match your project setup
 
     - name: Upload results to Cypress Dashboard
       run: npx cypress-ci upload
-
-# This is just a basic example; you may need to adjust it to fit your project's specific setup
